@@ -1,5 +1,4 @@
 
-
 CREATE DATABASE ecommerce;
 
 USE ecommerce;
@@ -42,9 +41,10 @@ CREATE TABLE TB_ENTREGAS (
 CREATE TABLE TB_PRODUTOS (
 	PRODUTO_ID INT AUTO_INCREMENT PRIMARY KEY,
 	DESCRICAO VARCHAR(255),
-	PRECO DECIMAL,
+	PRECO FLOAT,
 	QUANTIDADE_DISPONIVEL INT,
-	CATEGORIA ENUM ('Comida','Derivados','Higiene','Laticinios','Carnes')
+	CATEGORIA ENUM ('Eletronicos', 'Livros', 'Roupas', 'Calçados', 'Bebidas', 'Alimentos', 'Esportes'),
+    NOME VARCHAR (100)
 );
 
 CREATE TABLE TB_PEDIDO_PRODUTO (
@@ -57,9 +57,12 @@ CREATE TABLE TB_PEDIDO_PRODUTO (
 );
 
 CREATE TABLE TB_ESTOQUE (
-	PRODUTO_ID INT,
-	FOREIGN KEY (PRODUTO_ID) REFERENCES TB_PRODUTOS (PRODUTO_ID),
-	QUANTIDADE INT
+	MOVIMENTACAO_ID INT PRIMARY KEY, 
+    PRODUTO_ID INT,
+    FOREIGN KEY (PRODUTO_ID) REFERENCES TB_PRODUTOS (PRODUTO_ID),
+    TIPO_MOVIMENTACAO ENUM ('ENTRADA', 'SAIDA'),
+    QUANTIDADE INT,
+    DATA_MOVIMENTACAO DATETIME
 );
 
 INSERT INTO TB_CLIENTE (NOME, EMAIL, SENHA, ENDERECO, TELEFONE) 
@@ -170,7 +173,7 @@ VALUES
 (1, '2024-08-05 15:30:00', '2024-09-05 15:30:00', TRUE),
 (2, '2024-08-05 11:30:00', '2024-09-05 11:30:00', TRUE),
 (1, '2024-08-05 13:30:00', '2024-09-05 13:30:00', TRUE),
-(5, '2024-08-05 18:30:00', '2024-09-05 18:30:00', TRUE),
+(5, '2024-08-05 18:30:00', '2024-09-05 18:30:00', TRUE), 
 (3, '2024-08-05 23:30:00', '2024-09-05 23:30:00', TRUE),
 (7, '2024-08-05 01:30:00', '2024-09-05 01:30:00', TRUE),
 (10, '2024-08-05 05:30:00', '2024-09-05 05:30:00', TRUE),
@@ -192,3 +195,42 @@ VALUES
 (1, '2024-08-05 11:30:00', '2024-09-05 11:30:00', TRUE),
 (18, '2024-08-05 13:30:00', '2024-09-05 13:30:00', TRUE),
 (11, '2024-08-05 02:30:00', '2024-08-05 02:30:00', TRUE);
+
+INSERT INTO TB_PRODUTOS (NOME, DESCRICAO, PRECO, QUANTIDADE_DISPONIVEL, CATEGORIA)
+VALUES
+('Iphone 15 Pro Max', 'Iphone', 3878.99, 50, 'Eletronicos'),
+('Iphone 12', 'Iphone', 2699.10, 50, 'Eletronicos'),
+('Iphone 13', 'Iphone', 3549.00, 50, 'Eletronicos'),
+('Iphone 11', 'Iphone', 1665.15, 50, 'Eletronicos'),
+('Iphone XR', 'Iphone', 1669.00, 50, 'Eletronicos'),
+('Iphone X', 'Iphone', 900.00, 50, 'Eletronicos'),
+('Xiaomi Redmi 12', 'Xiaomi', 1032.99, 50, 'Eletronicos'),
+('Xiaomi POCO X6', 'Xiaomi', 3058.10, 50, 'Eletronicos'),
+('XiaomiPOCO C65', 'Xiaomi', 3878.99, 50, 'Eletronicos'),
+('Xiaomi Redmi 13C', 'Xiaomi', 1095.54, 50, 'Eletronicos'),
+('Xiaomi Redmi Note 13', 'Xiaomi', 1700.50, 50, 'Eletronicos'),
+('Samsung Galaxy A25', 'Samsung Galaxy', 1420.00, 50, 'Eletronicos'),
+('Samsung Galaxy A15', 'Samsung Galaxy', 911.00, 50, 'Eletronicos'),
+('Samsung Galaxy A35', 'Samsung Galaxy', 1650.00, 50, 'Eletronicos'),
+('Samsung Galaxy S23', 'Samsung Galaxy', 2250.00, 50, 'Eletronicos'),
+('Samsung Galaxy M55', 'Samsung Galaxy', 1800.00, 50, 'Eletronicos');
+
+INSERT INTO TB_PEDIDO_PRODUTO (PEDIDO_ID, PRODUTO_ID, QUANTIDADE, OBSERVACAO)
+VALUES
+(1, 5, 1, 'Iphone XR'),
+(2, 3, 1, 'Iphone 13'),
+(1, 7, 1, 'Xiaomi Redmi 12'),
+(5, 16, 1, 'Samsung Galaxy M55'),
+(3, 3, 1, 'Iphone 13'),
+(7, 1, 1, 'Iphone 15 Pro Max'),
+(10, 7, 1, 'Xiaomi Redmi 12'),
+(3, 8, 1, 'Xiaomi POCO X6'),
+(2, 1, 1, 'Iphone XR'),
+(5, 6, 1, 'Iphone X'),
+(20, 3, 1, 'Iphone 13'),
+(6, 9, 1, 'Xiaomi POCO C65'),
+(19, 10, 1, 'Xiaomi Redmi 13C'),
+(15, 6, 1, 'Iphone X'),
+(12, 2, 1, 'Iphone 12');
+
+
